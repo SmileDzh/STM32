@@ -1,0 +1,111 @@
+C语言编码规范
+1、变量类型重定义（便于代码运行在不同环境上修改类型定义）
+    typedef unsigned char       Uint8;
+    typedef signed   char       Int8;
+    typedef unsigned short      Uint16;
+    typedef signed   short      Int16;
+    typedef unsigned long       Uint32;
+    typedef signed   long       Int32;
+    typedef unsigned long long  Uint64;
+    typedef signed   long long  Int64;
+    typedef float               F32;
+    typedef double              F64;
+2、 C语言布尔类型定义
+    typedef enum
+    {
+        True   = 0x55,   /*成功*/
+        False  = 0xAA,   /*失败*/
+    }Bool;
+3、方法参数列表参数说明定义
+    #define ARG_IN            /*输入参数*/
+    #define ARG_OUT           /*输出参数*/
+    #define ARG_IN_OUT        /*输入输出参数*/
+    #define PASS              /*空定义，可放在未处理的分支语句中*/
+    一般顺序：输入  输入输出  输出
+4、变量格式定义
+   数据类型    变量类型
+    Uint8      u8
+    Int8       i8
+    Uint16     u16
+    Int16      i16
+    Uint32     u32
+    Int32      i32
+    Uint64     u64
+    Int64      i64
+    F32        f32
+    F64        f64
+    struct     st
+    enum       enum
+    全局变量：    g_[变量类型][变量含义]   /*变量含义以驼峰命名形式,g表示global，全局的意思*/
+    局部变量：    t_[变量类型][变量含义]   /*变量含义以驼峰命名形式,g表示global，全局的意思*/
+    指针变量：    p_[变量类型][变量含义]   /*变量含义以驼峰命名形式,p表示pointer，指针的意思*/
+    全局指针变量：gp_[变量类型][变量含义]  /*变量含义以驼峰命名形式,g表示global,全局的意思;p表示pointer，指针的意思*/
+    结构体成员：  m_[变量类型][变量含义]   /*变量含义以驼峰命名形式*/
+    枚举成员：    Enum[变量含义]           /*变量含义以驼峰命名形式*/
+5、结构体命名：ST_[结构体含义]             /*含义用全大写，单词之间下划线，取个别名:_st_[结构体含义小写]*/
+    例：
+    typedef struct _st_data_pack
+    {
+        Uint16 m_u16Len;
+        Uint16 m_u16Crc;
+    }ST_DATA_PACK; 
+
+6、方法命名：
+    模块名_函数含义   /*模块名全大写，函数含义首字母大写，驼峰命名，中间出现特殊单词可全大写*/
+    例：LCD_ShowString();
+        LCD_PrintPWM()
+        
+7、所有if分支必须有一个else
+   for循环语句中不允许出现break
+   一个带返回值的方法只能有一个return
+   一个方法参数列表没有参数，必须写void
+   只在本文件使用的函数，使用static修饰
+   只在本文件使用的全局变量，使用static修饰，如果要给其他文件使用，如果只读，需要对外提供该变量的const指针，如果有写操作，需提供写操作接口
+   static ST_PID g_stPIDParams = {0};
+   可读可写set get
+   const ST_PID* gp_stPIDParams = &g_atPIDParams;
+   .h中 extern ST_PID* gp_stPIDParams;
+   
+   
+   static Uint16 g_u16Arg = 0U;
+   set get
+   函数内部不能定义static变量
+   
+8、注释风格
+    方法注释：
+    /*********************************************************************************************************
+     *  @fn             [方法名]
+     *  @brief          [方法功能]
+     *  @detail         [方法说明]
+     *  @param[in]      [输入参数]
+     *  @param[out]     [输出参数]
+     *  @return         [返回值]
+     *  @REV            [版本号  作者  时间 Create]
+     *********************************************************************************************************/
+
+    代码注释：
+    都用/* */注释，，代码中不用//注释
+    
+    .c .h头部注释：
+    /*
+     * [文件名.c]
+     *
+     *  Created on: [xxxx年xx月xx日]
+     *      Author: [作者]
+     */
+     
+9、.h放重复调用定义格式：
+
+    #ifndef [文件路径全大写(多级路径下划线分割)]_[文件名全大写]_H_
+    #define [文件路径全大写(多级路径下划线分割)]_[文件名全大写]_H_
+    
+    #endif
+					
+					
+					
+					
+					
+					
+					
+					
+					
